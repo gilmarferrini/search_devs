@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getRepository } from "typeorm";
+import { getRepository } from 'typeorm';
 import Users from '../models/Users';
 
 interface IUser {
@@ -13,7 +13,11 @@ interface IUser {
 class UsersController {
   async index(request: Request, response: Response): Promise<Response> {
     const usersRepository = getRepository(Users);
-    const users = await usersRepository.createQueryBuilder().select(['avatar_url', 'username', 'description', 'password'])
+    const users = await usersRepository
+      .createQueryBuilder()
+      .select(['id', 'avatar_url', 'username', 'description', 'whatsapp'])
+      .getRawMany();
+
     return response.status(200).json(users);
   }
 
@@ -27,16 +31,24 @@ class UsersController {
       whatsapp,
     } = request.body;
 
-    const checkIfUserExist = await usersRepository.findOne({
-      where: { username }
+    const checkIfUsernameExist = await usersRepository.findOne({
+      where: { username },
     });
 
-    if (checkIfUserExist) {
-      if (checkIfUserExist.username === username) {
-        return response.status(400).json({ message: 'Username existente' });
-      } else if (checkIfUserExist.whatsapp === whatsapp) {
-        return response.status(400).json({ message: 'Whatsapp existente'});
-      }
+    const checkIfWhatsappExist = await usersRepository.findOne({
+      where: { whatsapp },
+    });
+
+    if (checkIfUsernameExist) {
+      return response
+        .status(400)
+        .json({ message: 'Este usuário já foi cadastrado' });
+    }
+
+    if (checkIfWhatsappExist) {
+      return response
+        .status(400)
+        .json({ message: 'Este whatsapp já foi cadastrado' });
     }
 
     const user: IUser = {
