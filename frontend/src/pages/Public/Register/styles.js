@@ -7,11 +7,15 @@ export const RegisterContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
 `
 
 export const Form = styled.form`
-  min-height: 35rem;
-  width: 20rem;
+
+  min-height: 20rem;
+  min-width: 20rem;
+
+  padding: 1rem 0;
 
   display: flex;
   flex-direction: column;
@@ -20,6 +24,8 @@ export const Form = styled.form`
 
   background: #261D5C;
   border-radius: 0.6rem;
+
+  transform: scale(0.9);
 `
 export const Title = styled.h1`
   font-size: 1.6rem;

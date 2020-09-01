@@ -20,6 +20,7 @@ export const Form = styled.form`
 
   background: #261D5C;
   border-radius: 0.6rem;
+  transform: scale(0.9);
 `
 export const Title = styled.h1`
   font-size: 1.6rem;
