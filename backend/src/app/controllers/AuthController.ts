@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import jwt from 'jsonwebtoken';
 import Users from '../models/Users';
@@ -39,6 +39,25 @@ class AuthController {
         return response.status(200).json({ token, id: checkIfUserExist.id });
       },
     );
+  }
+
+  async auth(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<void | Response> {
+    let authToken = request.headers.authorization;
+
+    authToken = authToken !== undefined ? authToken : 'inválido';
+
+    jwt.verify(authToken, JWT_SECRET, (err, authData) => {
+      if (err) {
+        return response.status(401).json({ message: 'Token inválido' });
+      }
+      request.body.auth = authData;
+
+      return next();
+    });
   }
 }
 

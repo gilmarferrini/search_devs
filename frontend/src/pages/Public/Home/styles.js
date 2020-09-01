@@ -24,6 +24,30 @@ export const Actions = styled.div`
     margin-left: 1rem;
   }
 
+  @media (max-width: 700px) {
+    top: 0.2rem;
+    right: 0.2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 8rem;
+
+    a {
+      padding: 0.2rem;
+      width: 100%;
+      text-align: center;
+    }
+
+    a + a {
+      margin-left: 0;
+      margin-top: 0.4rem;
+    }
+  }
+
+
 `;
 
 

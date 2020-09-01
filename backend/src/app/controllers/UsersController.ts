@@ -12,6 +12,10 @@ interface IUser {
 
 class UsersController {
   async index(request: Request, response: Response): Promise<Response> {
+    // const {
+    //   auth: { id, username },
+    // } = request.body;
+
     const usersRepository = getRepository(Users);
     const users = await usersRepository
       .createQueryBuilder()
@@ -19,6 +23,25 @@ class UsersController {
       .getRawMany();
 
     return response.status(200).json(users);
+  }
+
+  async show(request: Request, response: Response): Promise<Response> {
+    const usersRepository = getRepository(Users);
+    const { id } = request.params;
+
+    const {
+      auth: { id: userId, username },
+    } = request.body;
+
+    if (id !== userId) {
+      return response.status(401).send();
+    }
+
+    const user = await usersRepository.findOne({
+      where: { id: userId, username },
+    });
+
+    return response.status(200).json({ user });
   }
 
   async store(request: Request, response: Response): Promise<Response> {
