@@ -51,6 +51,9 @@ export const Button = styled.button`
 
   font-size: 0.8rem;
   font-weight: bold;
-  color: ${props => props.theme.colorPrimaryText}
+  color: ${props => props.theme.colorPrimaryText};
 `
 
+export const MessageError = styled.span`
+  color: ${props => props.theme.colorTextError};
+`

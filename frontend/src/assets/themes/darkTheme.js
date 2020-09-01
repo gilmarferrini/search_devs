@@ -4,4 +4,5 @@ export default {
   colorPrimaryBorder: '#181149',
   colorPrimaryText: '#ffffff',
   colorPrimaryButtons: '#CF5C36',
+  colorTextError: '#C02828',
 };

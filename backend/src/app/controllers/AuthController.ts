@@ -36,7 +36,7 @@ class AuthController {
           return response.status(500).json({ error: 'Erro ao gerar o token' });
         }
 
-        return response.status(200).json({ token });
+        return response.status(200).json({ token, id: checkIfUserExist.id });
       },
     );
   }
