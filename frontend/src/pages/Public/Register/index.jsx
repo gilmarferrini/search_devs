@@ -76,7 +76,7 @@ const Login = () => {
         </Field>
 
         <Field>
-          <p>Senha</p>
+          <p>Senha:</p>
           <input
             type="password"
             placeholder="Digite sua Senha"

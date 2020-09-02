@@ -9,6 +9,7 @@ const authController = new AuthController();
 
 usersRouter.get('/', authController.auth, usersController.index);
 usersRouter.get('/:id', authController.auth, usersController.show);
+usersRouter.delete('/:id', authController.auth, usersController.delete);
 usersRouter.post('/', usersController.store);
 
 usersRouter.post('/login', authController.login);

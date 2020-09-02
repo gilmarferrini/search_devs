@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
+
+import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Users from '../models/Users';
 
@@ -19,7 +21,12 @@ class AuthController {
     }
 
     if (checkIfUserExist) {
-      if (checkIfUserExist.password !== password) {
+      const checkUserPassword = await bcryptjs.compare(
+        password,
+        checkIfUserExist.password,
+      );
+
+      if (!checkUserPassword) {
         return response.status(401).json({ message: 'Senha incorreta' });
       }
     }

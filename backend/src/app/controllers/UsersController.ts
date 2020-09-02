@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
+import { hash } from 'bcryptjs';
 import Users from '../models/Users';
 
 interface IUser {
@@ -74,10 +75,12 @@ class UsersController {
         .json({ message: 'Este whatsapp já foi cadastrado' });
     }
 
+    const hashedPassword = await hash(password, 8);
+
     const user: IUser = {
       avatar_url,
       username,
-      password,
+      password: hashedPassword,
       description,
       whatsapp,
     };
@@ -85,6 +88,13 @@ class UsersController {
     await usersRepository.save(user);
 
     return response.status(200).json(user);
+  }
+
+  async delete(request: Request, response: Response): Promise<Response> {
+    const usersRepository = getRepository(Users);
+    const { id } = request.params;
+    await usersRepository.delete(id);
+    return response.send();
   }
 }
 
