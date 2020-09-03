@@ -53,9 +53,11 @@ class AuthController {
     response: Response,
     next: NextFunction,
   ): Promise<void | Response> {
-    let authToken = request.headers.authorization;
+    const authToken = request.headers.authorization;
 
-    authToken = authToken !== undefined ? authToken : 'inválido';
+    if (!authToken) {
+      return response.send(401).json({ message: 'Token inválido' });
+    }
 
     jwt.verify(authToken, JWT_SECRET, (err, authData) => {
       if (err) {

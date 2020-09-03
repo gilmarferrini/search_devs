@@ -13,10 +13,6 @@ interface IUser {
 
 class UsersController {
   async index(request: Request, response: Response): Promise<Response> {
-    // const {
-    //   auth: { id, username },
-    // } = request.body;
-
     const usersRepository = getRepository(Users);
     const users = await usersRepository
       .createQueryBuilder()
@@ -35,7 +31,7 @@ class UsersController {
     } = request.body;
 
     if (id !== userId) {
-      return response.status(401).send();
+      return response.status(401).json({ message: 'Id inválido' });
     }
 
     const user = await usersRepository.findOne({
@@ -87,7 +83,7 @@ class UsersController {
 
     await usersRepository.save(user);
 
-    return response.status(200).json(user);
+    return response.status(201).json(user);
   }
 
   async delete(request: Request, response: Response): Promise<Response> {
