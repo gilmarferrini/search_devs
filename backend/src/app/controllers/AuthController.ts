@@ -56,7 +56,7 @@ class AuthController {
     const authToken = request.headers.authorization;
 
     if (!authToken) {
-      return response.send(401).json({ message: 'Token inválido' });
+      return response.status(401).json({ message: 'Token inválido' });
     }
 
     jwt.verify(authToken, JWT_SECRET, (err, authData) => {
